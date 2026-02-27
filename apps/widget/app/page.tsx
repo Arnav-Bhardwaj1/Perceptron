@@ -1,25 +1,19 @@
 'use client'
-import { useVapi } from '@/modules/widget/hooks/use-vapi'
-import { Button } from '@workspace/ui/components/button'
-import React from 'react'
 
-const Page = () => {
-  const { startCall, endCall, isSpeaking, isConnecting, isConnected, transcript } = useVapi();
+import WidgetView from "@/modules/widget/ui/views/widget-view";
+import { use } from "react";
 
+interface Props {
+  searchParams: Promise<{ // we get the organizationId from the search params, and we use a promise to unwrap it
+    organizationId: string;
+  }>
+};
+
+const Page = ({ searchParams }: Props) => {
+  const {organizationId} = use(searchParams); // use hook is used to unwrap the promise and get the organizationId
   return (
-    <div>
-      <Button onClick={() => startCall()}>Start Call</Button>
-      <Button onClick={() => endCall()} variant="destructive">End Call</Button>
-      <div>
-        <p> isConnected: {`${isConnected}`}</p>
-        <p> isConnecting: {`${isConnecting}`}</p>
-        <p> isSpeaking: {`${isSpeaking}`}</p>
-        <div>
-          {JSON.stringify(transcript, null, 2)}
-        </div>
-      </div>
-    </div>
-  )
-}
+    <WidgetView organizationId={organizationId} />
+  );
+};
 
-export default Page
+export default Page;
