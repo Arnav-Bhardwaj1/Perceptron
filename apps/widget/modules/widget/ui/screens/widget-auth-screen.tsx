@@ -15,7 +15,7 @@ import {
 } from "@workspace/ui/components/form";
 import { Input } from "@workspace/ui/components/input";
 import { Button } from "@workspace/ui/components/button";
-import { contactSessionIdAtomFamily, organizationIdAtom } from "../../atoms/widget-atoms";
+import { contactSessionIdAtomFamily, organizationIdAtom, screenAtom } from "../../atoms/widget-atoms";
 import { useAtomValue, useSetAtom } from "jotai";
 
 const formSchema = z.object({
@@ -23,12 +23,11 @@ const formSchema = z.object({
   email: z.string().email("Invalid email address"),
 });
 
-const organizationId = "123";
-
 // Helper to calculate expiration time (avoids React Compiler warning in event handlers)
 const getExpirationTime = () => Date.now() + 24 * 60 * 60 * 1000;
 
 const WidgetAuthScreen = () => {
+  const setScreen = useSetAtom(screenAtom);
   const organizationId = useAtomValue(organizationIdAtom);
   const setContactSessionId = useSetAtom (
   contactSessionIdAtomFamily (organizationId || ""));     
@@ -75,6 +74,7 @@ const WidgetAuthScreen = () => {
     });
 
     setContactSessionId(contactSessionsId);
+    setScreen("selection");
   };
 
   return (
