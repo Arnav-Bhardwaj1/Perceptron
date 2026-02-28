@@ -1,7 +1,8 @@
 import { atom } from "jotai";
 import { WidgetScreen } from "../types";
 // import { atomWithStorage } from "jotai/ts3.8/esm/vanilla/utils/atomWithStorage";
-import { atomFamily, atomWithStorage } from "jotai/utils";
+import { atomWithStorage } from "jotai/utils";
+import { atomFamily } from "jotai-family";
 import { CONTACT_SESSION_KEY } from "../constants";
 import { Id } from "@workspace/backend/_generated/dataModel";
 

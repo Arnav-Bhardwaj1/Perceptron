@@ -1,8 +1,6 @@
 
 function Page() {
-  return (
-    <p>Conversations Page</p>
-  )
+  return null
 }
 
 export default Page
