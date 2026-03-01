@@ -107,9 +107,9 @@ export const ConversationsPanel = () => {
               const isLastMessageFromOperator =
                 conversation.lastMessage?.message?.role !== "user";
 
-              const country = getCountryFromTimezone(
-                conversation.contactSession.metadata?.timezone
-              );
+              const country = conversation.contactSession.metadata?.timezone
+                ? getCountryFromTimezone(conversation.contactSession.metadata.timezone)
+                : null;
 
               const countryFlagUrl = country?.code
                 ? getCountryFlagUrl(country.code)
