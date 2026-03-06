@@ -95,7 +95,9 @@ export const create = mutation({
       });
     }
 
-    if (conversation.status === "unresolved") {
+    // Only update if status is still "unresolved" (atomic operation)
+    const updatedConversation = await ctx.db.get(args.conversationId);
+    if (updatedConversation?.status === "unresolved") {
       await ctx.db.patch(args.conversationId, {
         status: "escalated",
       });
