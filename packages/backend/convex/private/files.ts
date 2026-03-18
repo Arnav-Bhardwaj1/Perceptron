@@ -83,7 +83,7 @@ export const deleteFile = mutation({
   },
 });
 
-export const addFile = action({
+export const addFile = action({ // we use action because this operation requires calling external AI APIs for text extraction and coordinating multiple async operations across storage, AI processing, and RAG indexing.
   args: {
     filename: v.string(),
     mimeType: v.string(),
