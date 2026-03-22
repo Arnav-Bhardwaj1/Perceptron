@@ -1,5 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { Button } from "@workspace/ui/components/button";
@@ -42,25 +41,25 @@ export const CustomizationForm = ({
 }: CustomizationFormProps) => {
   const upsertWidgetSettings = useMutation(api.private.widgetSettings.upsert);
 
-  const form = useForm<FormSchema>({
+  const form = useForm<FormSchema>({ // form is a React Hook Form object that manages the state and validation of the customization form. We initialize it with the useForm hook, providing a resolver that integrates Zod schema validation (widgetSettingsSchema) and default values based on the initialData prop. This setup allows us to easily handle form submissions, validations, and error messages in a structured way.
     resolver: zodResolver(widgetSettingsSchema),
     defaultValues: {
       greetMessage:
         initialData?.greetMessage || "Hi! How can I help you today?",
       defaultSuggestions: {
-        suggestion1: initialData?.defaultSuggestions.suggestion1 || "",
-        suggestion2: initialData?.defaultSuggestions.suggestion2 || "",
-        suggestion3: initialData?.defaultSuggestions.suggestion3 || "",
+        suggestion1: initialData?.defaultSuggestions?.suggestion1 || "",
+        suggestion2: initialData?.defaultSuggestions?.suggestion2 || "",
+        suggestion3: initialData?.defaultSuggestions?.suggestion3 || "",
       },
       vapiSettings: {
-        assistantId: initialData?.vapiSettings.assistantId || "",
-        phoneNumber: initialData?.vapiSettings.phoneNumber || "",
+        assistantId: initialData?.vapiSettings?.assistantId || "",
+        phoneNumber: initialData?.vapiSettings?.phoneNumber || "",
       },
     },
   });
 
   const onSubmit = async (values: FormSchema) => {
-    try {
+    try { // In the onSubmit function, we handle the form submission logic. When the user submits the form, we first construct the vapiSettings object based on the form values, ensuring that if the user selects "none" for either the assistantId or phoneNumber, we set those values to an empty string. Then, we call the upsertWidgetSettings mutation to save the settings to the database.
       const vapiSettings: WidgetSettings["vapiSettings"] = {
         assistantId:
           values.vapiSettings.assistantId === "none"
