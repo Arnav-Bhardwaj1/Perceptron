@@ -59,6 +59,9 @@ importers:
       ai:
         specifier: 4.3.16
         version: 4.3.16(react@19.2.4)(zod@3.25.76)
+      bowser:
+        specifier: 2.12.0
+        version: 2.12.0
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -285,7 +288,7 @@ importers:
         specifier: workspace:*
         version: link:../typescript-config
       typescript:
-        specifier: latest
+        specifier: ^5.9.3
         version: 5.9.3
 
   packages/eslint-config:
@@ -336,7 +339,7 @@ importers:
         specifier: workspace:*
         version: link:../typescript-config
       typescript:
-        specifier: latest
+        specifier: ^5.9.3
         version: 5.9.3
 
   packages/typescript-config: {}
@@ -388,6 +391,9 @@ importers:
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1
+      sonner:
+        specifier: ^2.0.7
+        version: 2.0.7(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       tailwind-merge:
         specifier: ^3.4.0
         version: 3.5.0
@@ -3454,6 +3460,9 @@ packages:
     resolution: {integrity: sha512-lIyg0szRfYbiy67j9KN8IyeD7q7hcmqnJ1ddWmNt19ItGpNN64mnllmxUNFIOdOm6by97jlL6wfpTTJrmnjWAA==}
     engines: {node: '>=6.0.0'}
     hasBin: true
+
+  bowser@2.12.0:
+    resolution: {integrity: sha512-HcOcTudTeEWgbHh0Y1Tyb6fdeR71m4b/QACf0D4KswGTsNeIJQmg38mRENZPAYPZvGFN3fk3604XbQEPdxXdKg==}
 
   bowser@2.14.1:
     resolution: {integrity: sha512-tzPjzCxygAKWFOJP011oxFHs57HzIhOEracIgAePE4pqB3LikALKnSzUyU4MGs9/iCEUuHlAJTjTc5M+u7YEGg==}
@@ -9175,6 +9184,8 @@ snapshots:
   balanced-match@4.0.4: {}
 
   baseline-browser-mapping@2.10.0: {}
+
+  bowser@2.12.0: {}
 
   bowser@2.14.1: {}
 
