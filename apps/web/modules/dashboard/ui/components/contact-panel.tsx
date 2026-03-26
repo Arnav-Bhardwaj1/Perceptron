@@ -48,7 +48,7 @@ export const ContactPanel = () => {
         return { browser: "Unknown", os: "Unknown", device: "Unknown" };
       }
 
-      const browser = Bowser.getParser(userAgent);
+      const browser = Bowser.getParser(userAgent); // Bowser is a JavaScript library that helps you read and understand the browser’s user-agent string.
       const result = browser.getResult();
 
       return {
@@ -63,6 +63,7 @@ export const ContactPanel = () => {
     };
   }, []);
 
+  // userAgent is a string that contains information about the user's browser, operating system, and device. We will parse this string to get the relevant information to display in the contact panel. We use useMemo to memoize the result of parsing the user agent, so we only parse it once per contact session.
   const userAgentInfo = useMemo(() => 
     parseUserAgent(contactSession?.metadata?.userAgent), 
   [contactSession?.metadata?.userAgent, parseUserAgent]);

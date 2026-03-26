@@ -1,8 +1,7 @@
+import { BillingView } from "@/modules/billing/ui/views/billing-view"
 
 function Page() {
-  return (
-    <p>Billings Page</p>
-  )
+  return <BillingView />
 }
 
 export default Page
