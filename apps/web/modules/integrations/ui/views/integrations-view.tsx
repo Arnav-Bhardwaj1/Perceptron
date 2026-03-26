@@ -21,7 +21,7 @@ import { createScript } from "../../utils";
 
 export const IntegrationsView = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [selectedSnippet, setSelectedSnippet] = useState("");
+  const [selectedSnippet, setSelectedSnippet] = useState(""); // state to hold the currently selected code snippet for the integration
   const { organization } = useOrganization();
 
   const handleIntegrationClick = (integrationId: IntegrationId) => {
