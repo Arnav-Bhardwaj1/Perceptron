@@ -1,8 +1,7 @@
+import { IntegrationsView } from "@/modules/integrations/ui/views/integrations-view"
 
 function Page() {
-  return (
-    <p>Integrations Page</p>
-  )
+  return <IntegrationsView />
 }
 
 export default Page

@@ -1,11 +1,11 @@
 import { ConvexError, v } from "convex/values";
 import { generateText } from "ai";
 import { action, mutation, query } from "../_generated/server";
-import { components } from "../_generated/api";
+import { components, internal } from "../_generated/api";
 import { supportAgent } from "../system/ai/agents/supportAgent";
 import { paginationOptsValidator } from "convex/server";
 import { saveMessage } from "@convex-dev/agent";
-import { google } from "@ai-sdk/google";
+import { openai } from "@ai-sdk/openai";
 import { OPERATOR_MESSAGE_ENHANCEMENT_PROMPT } from "../system/ai/constants";
 
 export const enhanceResponse = action({
@@ -31,8 +31,22 @@ export const enhanceResponse = action({
       });
     }
 
+    const subscription = await ctx.runQuery(
+      internal.system.subscriptions.getByOrganizationId,
+      {
+        organizationId: orgId,
+      },
+    );
+
+    if (subscription?.status !== "active") {
+      throw new ConvexError({
+        code: "BAD_REQUEST",
+        message: "Missing subscription"
+      });
+    }
+
     const response = await generateText({
-      model: google("gemini-2.5-flash"),
+      model: openai("gpt-4o-mini"),
       messages: [
         {
           role: "system",
@@ -96,9 +110,7 @@ export const create = mutation({
       });
     }
 
-    // Only update if status is still "unresolved" (atomic operation)
-    const updatedConversation = await ctx.db.get(args.conversationId);
-    if (updatedConversation?.status === "unresolved") {
+    if (conversation.status === "unresolved") {
       await ctx.db.patch(args.conversationId, {
         status: "escalated",
       });
