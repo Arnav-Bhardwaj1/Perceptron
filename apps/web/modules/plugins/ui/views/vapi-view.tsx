@@ -169,9 +169,11 @@ const VapiPluginRemoveForm = ({
   setOpen: (value: boolean) => void;
 }) => {
   const removePlugin = useMutation(api.private.plugins.remove); // this removes the plugin from the database but not remove the secret from the AWS secret manager. This is to prevent accidental deletion of secrets. The secret can be manually deleted from the AWS console if needed.
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async () => {
     try {
+      setIsLoading(true);
       await removePlugin({
         service: "vapi",
       });
@@ -180,6 +182,8 @@ const VapiPluginRemoveForm = ({
     } catch (error) {
       console.error(error);
       toast.error("Something went wrong");
+    } finally {
+      setIsLoading(false);
     }
   };
 

@@ -63,7 +63,7 @@ A Next.js 15 App Router application rendered entirely inside the iframe. There i
 ### Screen state machine
 
 ```
-LOADING ──► (4-step async init pipeline)
+Loading ──► (4-step async init pipeline)
     │
     ├── org invalid                    ──► ERROR
     │
@@ -75,7 +75,7 @@ LOADING ──► (4-step async init pipeline)
                                                       └── VOICE
 ```
 
-### Init pipeline (`LOADING` screen)
+### Init pipeline
 
 Runs as a sequential 5-step state machine: `org → session → settings → vapi → done`
 

@@ -51,9 +51,76 @@ export default function RootLayout({
       <body
         className="h-full font-sans antialiased relative bg-background min-h-screen"
       >
-        <div className="fixed inset-0 -z-10 hidden dark:block bg-[linear-gradient(160deg,#07070f_0%,#0d0d1a_50%,#0f0f22_100%)] pointer-events-none" />
-        <div className="ambient-orange dark:block hidden" />
-        <div className="ambient-teal dark:block hidden" />
+        {/* Glorious Dynamic Aurora Base */}
+        <div className="fixed inset-0 -z-10 dark:block hidden pointer-events-none bg-[#050508]">
+          <div
+            className="absolute top-[-10%] left-[-15%] w-[55%] h-[55%] rounded-full mix-blend-screen filter blur-[100px] opacity-35 animate-aurora-1"
+            style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.7) 0%, rgba(76,29,149,0) 70%)' }}
+          />
+          <div
+            className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] rounded-full mix-blend-screen filter blur-[120px] opacity-30 animate-aurora-2"
+            style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.7) 0%, rgba(194,65,12,0) 70%)' }}
+          />
+          <div
+            className="absolute top-[30%] right-[-5%] w-[40%] h-[40%] rounded-full mix-blend-screen filter blur-[90px] opacity-20 animate-aurora-3"
+            style={{ background: 'radial-gradient(circle, rgba(3,218,197,0.5) 0%, rgba(0,180,160,0) 70%)' }}
+          />
+          <div
+            className="absolute bottom-[10%] left-[10%] w-[40%] h-[40%] rounded-full mix-blend-screen filter blur-[80px] opacity-15 animate-aurora-4"
+            style={{ background: 'radial-gradient(circle, rgba(236,72,153,0.5) 0%, rgba(190,24,93,0) 70%)' }}
+          />
+        </div>
+
+        {/* SVG Noise Overlay */}
+        <div
+          className="fixed inset-0 -z-10 opacity-[0.25] mix-blend-overlay pointer-events-none dark:block hidden"
+          style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.85\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }}
+        />
+
+        {/* Refined Perspective Grid */}
+        <div
+          className="fixed inset-0 -z-10 opacity-[0.06] pointer-events-none dark:block hidden"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(255,255,255,0.7) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.7) 1px, transparent 1px)
+            `,
+            backgroundSize: '100px 100px',
+            maskImage: 'radial-gradient(ellipse at center, black 20%, transparent 80%)',
+            WebkitMaskImage: 'radial-gradient(ellipse at center, black 20%, transparent 80%)',
+          }}
+        />
+
+        {/* Light Mode Fallback Base */}
+        <div className="fixed inset-0 -z-10 block dark:hidden bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-violet-100 via-background to-background opacity-80 pointer-events-none" />
+
+        <style>{`
+          @keyframes aurora-1 {
+            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            33% { transform: translate(12%, 8%) scale(1.1) rotate(5deg); }
+            66% { transform: translate(-8%, 5%) scale(0.95) rotate(-5deg); }
+          }
+          @keyframes aurora-2 {
+            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            33% { transform: translate(-10%, -15%) scale(1.05) rotate(-3deg); }
+            66% { transform: translate(8%, -5%) scale(1.15) rotate(4deg); }
+          }
+          @keyframes aurora-3 {
+            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            33% { transform: translate(-15%, 10%) scale(1.1) rotate(6deg); }
+            66% { transform: translate(10%, -12%) scale(0.9) rotate(-4deg); }
+          }
+          @keyframes aurora-4 {
+            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            33% { transform: translate(10%, -10%) scale(0.95) rotate(-5deg); }
+            66% { transform: translate(-12%, 15%) scale(1.05) rotate(5deg); }
+          }
+          
+          .animate-aurora-1 { animation: aurora-1 25s ease-in-out infinite alternate; }
+          .animate-aurora-2 { animation: aurora-2 28s ease-in-out infinite alternate-reverse; }
+          .animate-aurora-3 { animation: aurora-3 32s ease-in-out infinite alternate; }
+          .animate-aurora-4 { animation: aurora-4 35s ease-in-out infinite alternate-reverse; }
+        `}</style>
 
         <ClerkProvider
           signInUrl="/sign-in"
