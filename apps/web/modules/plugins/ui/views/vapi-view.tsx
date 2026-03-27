@@ -32,6 +32,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { Button } from "@workspace/ui/components/button";
+import { Spinner } from "@workspace/ui/components/spinner";
 import { VapiConnectedView } from "../components/vapi-connected-view";
 
 const vapiFeatures: Feature[] = [
@@ -149,6 +150,7 @@ const VapiPluginForm = ({
                 disabled={form.formState.isSubmitting}
                 type="submit"
               >
+                {form.formState.isSubmitting && <Spinner />}
                 {form.formState.isSubmitting ? "Connecting..." : "Connect"}
               </Button>
             </DialogFooter>
@@ -191,8 +193,9 @@ const VapiPluginRemoveForm = ({
           Are you sure you want to disconnect the Vapi plugin?
         </DialogDescription>
         <DialogFooter>
-          <Button onClick={onSubmit} variant="destructive">
-            Disconnect
+          <Button onClick={onSubmit} variant="destructive" disabled={isLoading}>
+            {isLoading && <Spinner />}
+            {isLoading ? "Disconnecting..." : "Disconnect"}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -218,10 +221,10 @@ export const VapiView = () => {
     <>
       <VapiPluginForm open={connectOpen} setOpen={setConnectOpen} />
       <VapiPluginRemoveForm open={removeOpen} setOpen={setRemoveOpen} />
-      <div className="flex min-h-screen flex-col bg-muted p-8">
+      <div className="flex min-h-screen flex-col bg-muted/50 dark:bg-transparent p-8">
         <div className="mx-auto w-full max-w-screen-md">
           <div className="space-y-2">
-            <h1 className="text-2xl md:text-4xl">Vapi Plugin</h1>
+            <h1 className="text-2xl md:text-4xl font-bold tracking-tight">Vapi Plugin</h1>
             <p className="text-muted-foreground">Connect Vapi to enable AI voice calls and phone support</p>
           </div>
 

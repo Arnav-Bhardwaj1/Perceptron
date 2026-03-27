@@ -6,6 +6,7 @@ import {
   XCircleIcon,
 } from "lucide-react";
 import { Badge } from "@workspace/ui/components/badge";
+import { Skeleton } from "@workspace/ui/components/skeleton";
 import {
   Table,
   TableBody,
@@ -38,16 +39,22 @@ export const VapiPhoneNumbersTab = () => {
         <TableBody>
           {(() => {
             if (isLoading) {
-              return (
-                <TableRow>
-                  <TableCell
-                    colSpan={3}
-                    className="px-6 py-8 text-center text-muted-foreground"
-                  >
-                    Loading phone numbers...
+              return Array.from({ length: 3 }).map((_, i) => (
+                <TableRow key={i}>
+                  <TableCell className="px-6 py-4">
+                    <div className="flex items-center gap-3">
+                      <Skeleton className="size-4 rounded" />
+                      <Skeleton className="h-4 w-32 rounded" />
+                    </div>
+                  </TableCell>
+                  <TableCell className="px-6 py-4">
+                    <Skeleton className="h-4 w-24" />
+                  </TableCell>
+                  <TableCell className="px-6 py-4">
+                    <Skeleton className="h-5 w-16 rounded-full" />
                   </TableCell>
                 </TableRow>
-              )
+              ));
             }
 
             if (phoneNumbers.length === 0) {

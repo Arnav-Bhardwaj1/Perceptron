@@ -2,6 +2,7 @@
 
 import { useOrganization } from "@clerk/nextjs";
 import { Button } from "@workspace/ui/components/button";
+import { Spinner } from "@workspace/ui/components/spinner";
 import { Input } from "@workspace/ui/components/input";
 import { Label } from "@workspace/ui/components/label";
 import { Separator } from "@workspace/ui/components/separator";
@@ -22,6 +23,7 @@ import { createScript } from "../../utils";
 export const IntegrationsView = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedSnippet, setSelectedSnippet] = useState(""); // state to hold the currently selected code snippet for the integration
+  const [isCopying, setIsCopying] = useState(false);
   const { organization } = useOrganization();
 
   const handleIntegrationClick = (integrationId: IntegrationId) => {
@@ -36,11 +38,14 @@ export const IntegrationsView = () => {
   };
 
   const handleCopy = async () => {
+    setIsCopying(true);
     try {
       await navigator.clipboard.writeText(organization?.id ?? "");
       toast.success("Copied to clipboard");
     } catch {
       toast.error("Failed to copy to clipboard");
+    } finally {
+      setTimeout(() => setIsCopying(false), 500);
     }
   };
 
@@ -51,10 +56,10 @@ export const IntegrationsView = () => {
         onOpenChange={setDialogOpen}
         snippet={selectedSnippet}
       />
-      <div className="flex min-h-screen flex-col bg-muted p-8">
+      <div className="flex min-h-screen flex-col bg-muted/50 dark:bg-transparent p-8">
         <div className="mx-auto w-full max-w-3xl">
           <div className="space-y-2">
-            <h1 className="text-2xl md:text-4xl">Setup & Integrations</h1>
+            <h1 className="text-2xl md:text-4xl font-bold tracking-tight">Setup & Integrations</h1>
             <p className="text-muted-foreground">
               Choose the integration that&apos;s right for you
             </p>
@@ -69,14 +74,15 @@ export const IntegrationsView = () => {
                 id="organization-id"
                 readOnly
                 value={organization?.id ?? ""}
-                className="flex-1 bg-background font-mono text-sm"
+                className="flex-1 bg-background dark:bg-white/5 dark:border-white/10 font-mono text-sm"
               />
               <Button
                 className="gap-2"
                 onClick={handleCopy}
                 size="sm"
+                disabled={isCopying}
               >
-                <CopyIcon className="size-4" />
+                {isCopying ? <Spinner className="size-4" /> : <CopyIcon className="size-4" />}
                 Copy
               </Button>
             </div>
@@ -96,7 +102,7 @@ export const IntegrationsView = () => {
                   key={integration.id}
                   onClick={() => handleIntegrationClick(integration.id)}
                   type="button"
-                  className="flex items-center gap-4 rounded-lg border bg-background p-4 hover:bg-accent"
+                  className="flex items-center gap-4 rounded-2xl border bg-background dark:bg-white/3 dark:border-white/10 p-4 hover:bg-accent hover:border-primary/50 transition-colors duration-300"
                 >
                   <Image
                     alt={integration.title}
@@ -149,7 +155,7 @@ export const IntegrationsDialog = ({
               1. Copy the following code
             </div>
             <div className="group relative">
-              <pre className="max-h-75 overflow-x-auto overflow-y-auto whitespace-pre-wrap break-all rounded-md bg-foreground p-2 font-mono text-secondary text-sm">
+              <pre className="max-h-75 overflow-x-auto overflow-y-auto whitespace-pre-wrap break-all rounded-xl bg-foreground dark:bg-[#0a0a16] p-4 font-mono text-secondary text-sm dark:border dark:border-white/10">
                 {snippet}
               </pre>
               <Button

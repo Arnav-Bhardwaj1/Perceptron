@@ -3,6 +3,7 @@
 import { useMutation } from "convex/react";
 import { useState } from "react";
 import { Button } from "@workspace/ui/components/button";
+import { Spinner } from "@workspace/ui/components/spinner";
 import {
   Dialog,
   DialogContent,
@@ -62,7 +63,7 @@ export const DeleteFileDialog = ({
 
         {file && (
           <div className="py-4">
-            <div className="rounded-lg border bg-muted/50 p-4">
+            <div className="rounded-2xl border bg-muted/50 dark:bg-white/3 dark:border-white/10 p-4">
               <p className="font-medium">{file.name}</p>
               <p className="text-muted-foreground text-sm">
                 Type: {file.type.toUpperCase()} | Size: {file.size}
@@ -84,6 +85,7 @@ export const DeleteFileDialog = ({
             onClick={handleDelete}
             variant="destructive"
           >
+            {isDeleting && <Spinner />}
             {isDeleting ? "Deleting..." : "Delete"}
           </Button>
         </DialogFooter>

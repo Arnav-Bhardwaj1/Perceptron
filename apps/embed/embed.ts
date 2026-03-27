@@ -56,7 +56,7 @@ import { chatBubbleIcon, closeIcon } from './icons';
       width: 60px;
       height: 60px;
       border-radius: 50%;
-      background: #3b82f6;
+      background: linear-gradient(135deg, #9a3412, #c2410c, #ea580c);
       color: white;
       border: none;
       cursor: pointer;
@@ -64,7 +64,7 @@ import { chatBubbleIcon, closeIcon } from './icons';
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 24px rgba(59, 130, 246, 0.35);
+      box-shadow: 0 4px 24px rgba(249, 115, 22, 0.35);
       transition: all 0.2s ease;
     `;
     
@@ -90,7 +90,7 @@ import { chatBubbleIcon, closeIcon } from './icons';
       max-width: calc(100vw - 40px);
       max-height: calc(100vh - 110px);
       z-index: 999998;
-      border-radius: 16px;
+      border-radius: 20px;
       overflow: hidden;
       box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
       display: none;
@@ -175,7 +175,7 @@ import { chatBubbleIcon, closeIcon } from './icons';
       }, 300);
       // Change button icon back to chat
       button.innerHTML = chatBubbleIcon;
-      button.style.background = '#3b82f6';
+      button.style.background = 'linear-gradient(135deg, #9a3412, #c2410c, #ea580c)';
     }
   }
   

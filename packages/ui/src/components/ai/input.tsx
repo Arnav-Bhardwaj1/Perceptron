@@ -78,7 +78,7 @@ export type AIInputProps = HTMLAttributes<HTMLFormElement>;
 export const AIInput = ({ className, ...props }: AIInputProps) => (
   <form
     className={cn(
-      "w-full divide-y overflow-hidden rounded-md border bg-background",
+      "w-full divide-y overflow-hidden rounded-xl border dark:border-white/10 bg-background dark:bg-white/3",
       className
     )}
     {...props}

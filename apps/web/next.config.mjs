@@ -3,13 +3,7 @@ import { withSentryConfig } from "@sentry/nextjs";
 const nextConfig = {
   transpilePackages: ["@workspace/ui"],
   async redirects() {
-    return [
-      {
-        source: "/",
-        destination: "/conversations",
-        permanent: false,
-      },
-    ]
+    return []
   }
 }
 

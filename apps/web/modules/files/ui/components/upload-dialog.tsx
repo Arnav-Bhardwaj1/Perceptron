@@ -13,6 +13,7 @@ import {
 import { Input } from "@workspace/ui/components/input";
 import { Label } from "@workspace/ui/components/label";
 import { Button } from "@workspace/ui/components/button";
+import { Spinner } from "@workspace/ui/components/spinner";
 import {
   Dropzone,
   DropzoneContent,
@@ -164,6 +165,7 @@ export const UploadDialog = ({
             onClick={handleUpload}
             disabled={uploadedFiles.length === 0 || isUploading || !uploadForm.category}
           >
+            {isUploading && <Spinner />}
             {isUploading ? "Uploading..." : "Upload"}
           </Button>
         </DialogFooter>

@@ -21,6 +21,7 @@ import { usePaginatedQuery } from "convex/react";
 import { api } from "@workspace/backend/_generated/api";
 import type { PublicFile } from "@workspace/backend/private/files";
 import { Button } from "@workspace/ui/components/button";
+import { Skeleton } from "@workspace/ui/components/skeleton";
 import { FileIcon, MoreHorizontalIcon, PlusIcon, TrashIcon } from "lucide-react";
 import { UploadDialog } from "../components/upload-dialog";
 import { useState } from "react";
@@ -72,10 +73,10 @@ export const FilesView = () => {
         onOpenChange={setUploadDialogOpen}
         open={uploadDialogOpen}
       />
-      <div className="flex min-h-screen flex-col bg-muted p-8">
+      <div className="flex min-h-screen flex-col bg-muted/50 dark:bg-transparent p-8">
         <div className="mx-auto w-full max-w-3xl">
           <div className="space-y-2">
-            <h1 className="text-2xl md:text-4xl">
+            <h1 className="text-2xl md:text-4xl font-bold tracking-tight">
               Knowledge Base
             </h1>
             <p className="text-muted-foreground">
@@ -83,7 +84,7 @@ export const FilesView = () => {
             </p>
           </div>
 
-          <div className="mt-8 rounded-lg border bg-background">
+          <div className="mt-8 rounded-2xl border bg-background dark:bg-white/3 dark:border-white/10">
             <div className="flex items-center justify-end border-b px-6 py-4">
               <Button
                 onClick={() => setUploadDialogOpen(true)}
@@ -104,13 +105,25 @@ export const FilesView = () => {
               <TableBody>
                 {(() => {
                   if (isLoadingFirstPage) {
-                    return (
-                      <TableRow>
-                        <TableCell className="h-24 text-center" colSpan={4}>
-                          Loading files...
+                    return Array.from({ length: 5 }).map((_, i) => (
+                      <TableRow key={i}>
+                        <TableCell className="px-6 py-4">
+                          <div className="flex items-center gap-3">
+                            <Skeleton className="size-5 rounded" />
+                            <Skeleton className="h-4 w-32" />
+                          </div>
+                        </TableCell>
+                        <TableCell className="px-6 py-4">
+                          <Skeleton className="h-5 w-14 rounded-full" />
+                        </TableCell>
+                        <TableCell className="px-6 py-4">
+                          <Skeleton className="h-4 w-16" />
+                        </TableCell>
+                        <TableCell className="px-6 py-4">
+                          <Skeleton className="size-8 rounded-md" />
                         </TableCell>
                       </TableRow>
-                    );
+                    ));
                   }
 
                   if (files.results.length === 0) {

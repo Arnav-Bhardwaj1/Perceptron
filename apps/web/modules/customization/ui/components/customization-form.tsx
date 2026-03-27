@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { Button } from "@workspace/ui/components/button";
+import { Spinner } from "@workspace/ui/components/spinner";
 import {
   Card,
   CardContent,
@@ -199,6 +200,7 @@ export const CustomizationForm = ({
 
         <div className="flex justify-end">
           <Button disabled={form.formState.isSubmitting} type="submit">
+            {form.formState.isSubmitting && <Spinner />}
             Save Settings
           </Button>
         </div>

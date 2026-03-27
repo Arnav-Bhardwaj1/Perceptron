@@ -24,7 +24,7 @@ export const PluginCard = ({
   onSubmit,
 }: PluginCardProps) => {
   return (
-    <div className="h-fit w-full rounded-lg border bg-background p-8">
+    <div className="h-fit w-full rounded-2xl border bg-background dark:glass-strong dark:border-white/10 p-8">
       <div className="mb-6 flex items-center justify-center gap-6">
         <div className="flex flex-col items-center">
           <Image
@@ -41,13 +41,15 @@ export const PluginCard = ({
         </div>
 
         <div className="flex flex-col items-center">
-          <Image
-            alt="Platform"
-            className="object-contain"
-            height={40}
-            width={40}
-            src="/logo.svg"
-          />
+          <div className="rounded-xl border border-white/15 bg-white/5 p-2">
+            <Image
+              alt="Platform"
+              className="object-contain"
+              height={40}
+              width={40}
+              src="/logo.svg"
+            />
+          </div>
         </div>
       </div>
 
@@ -61,7 +63,7 @@ export const PluginCard = ({
         <div className="space-y-4">
           {features.map((feature) => (
             <div className="flex items-center gap-3" key={feature.label}>
-              <div className="flex size-8 items-center justify-center rounded-lg border bg-muted">
+              <div className="flex size-8 items-center justify-center rounded-xl border bg-muted dark:bg-white/5 dark:border-white/10">
                 <feature.icon className="size-4 text-muted-foreground" />
               </div>
               <div>

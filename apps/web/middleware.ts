@@ -2,8 +2,11 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/dist/server/web/spec-extension/response';
 
 const isPublicRoute = createRouteMatcher([
+  "/",
   "/sign-in(.*)",
   "/sign-up(.*)",
+  "/docs(.*)",
+  "/privacy(.*)",
 ]);
 
 const isOrgFreeRoute = createRouteMatcher([

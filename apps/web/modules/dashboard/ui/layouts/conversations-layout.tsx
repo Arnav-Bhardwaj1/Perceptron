@@ -5,7 +5,7 @@ export const ConversationsLayout = ({
 }: { children: React.ReactNode; }) => {
   return (
     <div className="flex h-full w-full">
-      <div className="h-full w-[400px] shrink-0 border-r">
+      <div className="h-full w-[400px] shrink-0 border-r border-border dark:border-white/6">
         <ConversationsPanel />
       </div>
       <div className="h-full min-w-0 flex-1 overflow-hidden">

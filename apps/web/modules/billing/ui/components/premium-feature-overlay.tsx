@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import {
   type LucideIcon,
   BookOpenIcon,
@@ -10,8 +11,9 @@ import {
   PhoneIcon,
   UsersIcon,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@workspace/ui/components/button";
+import { Spinner } from "@workspace/ui/components/spinner";
 import {
   Card,
   CardContent,
@@ -67,6 +69,12 @@ export const PremiumFeatureOverlay = ({
   children
 }: PremiumFeatureOverlayProps) => {
   const router = useRouter();
+  const [isNavigating, setIsNavigating] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setIsNavigating(false);
+  }, [pathname]);
 
   return (
     <div className="relative min-h-screen">
@@ -80,11 +88,11 @@ export const PremiumFeatureOverlay = ({
 
       {/* Upgrade prompt */}
       <div className="absolute inset-0 z-40 flex items-center justify-center p-4">
-        <Card className="w-full max-w-md">
+        <Card className="w-full max-w-md dark:glass-strong dark:border-white/10 rounded-2xl">
           <CardHeader className="text-center">
             <div className="flex items-center justify-center">
-              <div className="mb-2 inline-flex h-12 w-12 items-center justify-center rounded-full border bg-muted">
-                <GemIcon className="size-6 text-muted-foreground" />
+              <div className="mb-2 inline-flex h-12 w-12 items-center justify-center rounded-full border border-primary/30 bg-primary/10">
+                <GemIcon className="size-6 text-primary" />
               </div>
             </div>
             <CardTitle className="text-xl">Premium Feature</CardTitle>
@@ -97,7 +105,7 @@ export const PremiumFeatureOverlay = ({
             <div className="space-y-6">
               {features.map((feature) => (
                 <div key={feature.label} className="flex items-center gap-3">
-                  <div className="flex size-8 items-center justify-center rounded-lg border bg-muted">
+                  <div className="flex size-8 items-center justify-center rounded-xl border bg-muted dark:bg-white/5 dark:border-white/10">
                     <feature.icon className="size-4 text-muted-foreground" />
                   </div>
                   <div className="text-left">
@@ -109,10 +117,12 @@ export const PremiumFeatureOverlay = ({
             </div>
 
             <Button
-              className="w-full"
-              onClick={() => router.push("/billing")}
+              className="w-full rounded-full"
+              onClick={() => { setIsNavigating(true); router.push("/billing"); }}
+              disabled={isNavigating}
               size="lg"
             >
+              {isNavigating && <Spinner />}
               View Plans
             </Button>
           </CardContent>

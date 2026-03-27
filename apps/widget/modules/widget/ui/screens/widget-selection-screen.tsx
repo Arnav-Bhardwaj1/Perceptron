@@ -2,6 +2,7 @@
 
 import { WidgetHeader } from "@/modules/widget/ui/components/widget-header";
 import { Button } from "@workspace/ui/components/button";
+import { Spinner } from "@workspace/ui/components/spinner";
 import { useAtomValue, useSetAtom } from "jotai";
 import { ChevronRightIcon, MessageSquareTextIcon, MicIcon, PhoneIcon } from "lucide-react";
 import { contactSessionIdAtomFamily, conversationIdAtom, errorMessageAtom, hasVapiSecretsAtom, organizationIdAtom, screenAtom, widgetSettingsAtom } from "../../atoms/widget-atoms";
@@ -23,7 +24,7 @@ export const WidgetSelectionScreen = () => {
   );
 
   const createConversation = useMutation(api.public.conversations.create);
-  const [isPending, setIsPending] = useState(false);
+  const [isStartingChat, setIsStartingChat] = useState(false);
 
   const handleNewConversation = async () => {
     if (!organizationId) {
@@ -37,7 +38,7 @@ export const WidgetSelectionScreen = () => {
       return;
     }
     
-    setIsPending(true);
+    setIsStartingChat(true);
     try {
       const conversationId = await createConversation({
         contactSessionId,
@@ -49,7 +50,7 @@ export const WidgetSelectionScreen = () => {
     } catch {
       setScreen("auth");
     } finally {
-      setIsPending(false);
+      setIsStartingChat(false);
     }
   };
 
@@ -65,16 +66,17 @@ export const WidgetSelectionScreen = () => {
           </p>
         </div>
       </WidgetHeader>
-      <div className="flex flex-1 flex-col gap-y-4 p-4 overflow-y-auto">
+      <div className="flex flex-1 flex-col gap-y-4 p-4 overflow-y-auto dark:bg-transparent">
         <Button
           className="h-16 w-full justify-between"
           variant="outline"
           onClick={handleNewConversation}
-          disabled={isPending}
+          disabled={isStartingChat}
         >
           <div className="flex items-center gap-x-2">
             <MessageSquareTextIcon className="size-4" />
             <span>Start chat</span>
+            {isStartingChat && <Spinner />}
           </div>
           <ChevronRightIcon />
         </Button>
@@ -83,7 +85,7 @@ export const WidgetSelectionScreen = () => {
             className="h-16 w-full justify-between"
             variant="outline"
             onClick={() => setScreen("voice")}
-            disabled={isPending}
+            disabled={isStartingChat}
           >
             <div className="flex items-center gap-x-2">
               <MicIcon className="size-4" />
@@ -97,7 +99,7 @@ export const WidgetSelectionScreen = () => {
             className="h-16 w-full justify-between"
             variant="outline"
             onClick={() => setScreen("contact")}
-            disabled={isPending}
+            disabled={isStartingChat}
           >
             <div className="flex items-center gap-x-2">
               <PhoneIcon className="size-4" />

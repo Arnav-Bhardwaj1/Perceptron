@@ -15,6 +15,7 @@ import {
 } from "@workspace/ui/components/form";
 import { Input } from "@workspace/ui/components/input";
 import { Button } from "@workspace/ui/components/button";
+import { Spinner } from "@workspace/ui/components/spinner";
 import { contactSessionIdAtomFamily, organizationIdAtom, screenAtom } from "../../atoms/widget-atoms";
 import { useAtomValue, useSetAtom } from "jotai";
 
@@ -97,7 +98,7 @@ const WidgetAuthScreen = () => {
               <FormItem>
                 <FormControl>
                   <Input
-                    className="h-10 bg-background"
+                    className="h-10 bg-background dark:bg-white/5 dark:border-white/10"
                     placeholder="e.g Arnav Bhardwaj"
                     type="text"
                     {...field}
@@ -114,7 +115,7 @@ const WidgetAuthScreen = () => {
               <FormItem>
                 <FormControl>
                   <Input
-                    className="h-10 bg-background"
+                    className="h-10 bg-background dark:bg-white/5 dark:border-white/10"
                     placeholder="e.g ab@example.com"
                     type="email"
                     {...field}
@@ -134,6 +135,7 @@ const WidgetAuthScreen = () => {
             size="lg"
             type="submit"
           >
+            {form.formState.isSubmitting && <Spinner />}
             Continue
           </Button>
         </form>

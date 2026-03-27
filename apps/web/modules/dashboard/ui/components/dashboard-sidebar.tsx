@@ -3,6 +3,7 @@
 import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
 import {
   CreditCardIcon,
+  HomeIcon,
   InboxIcon,
   LayoutDashboardIcon,
   LibraryBigIcon,
@@ -10,7 +11,9 @@ import {
   PaletteIcon,
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { Spinner } from "@workspace/ui/components/spinner";
 
 import {
   Sidebar,
@@ -68,6 +71,12 @@ const accountItems = [
 
 export const DashboardSidebar = () => {
   const pathname = usePathname();
+  const router = useRouter();
+  const [loadingUrl, setLoadingUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    setLoadingUrl(null);
+  }, [pathname]);
 
   const isActive = (url: string) => {
     if (url === "/") {
@@ -76,6 +85,14 @@ export const DashboardSidebar = () => {
 
     return pathname.startsWith(url);
   };
+
+  const handleNavClick = (e: React.MouseEvent, url: string) => {
+    if (isActive(url)) return;
+    e.preventDefault();
+    setLoadingUrl(url);
+    router.push(url);
+  };
+
   return (
     <Sidebar className="group" collapsible="icon">
       <SidebarHeader>
@@ -105,6 +122,25 @@ export const DashboardSidebar = () => {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
+        {/* Dashboard */}
+        <SidebarGroup>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                tooltip="Dashboard"
+                onClick={(e) => handleNavClick(e, "/")}
+              >
+                {loadingUrl === "/" ? (
+                  <Spinner className="size-4" />
+                ) : (
+                  <HomeIcon className="size-4" />
+                )}
+                <span>Dashboard</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroup>
+
         {/*  Customer Support  */}
         <SidebarGroup>
           <SidebarGroupLabel>Customer Support</SidebarGroupLabel>
@@ -113,18 +149,20 @@ export const DashboardSidebar = () => {
               {customerSupportItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
-                    asChild
                     isActive={isActive(item.url)}
                     className={cn(
                       isActive(item.url) &&
-                        "bg-linear-to-b from-sidebar-primary to-[#0b63f3]! text-sidebar-primary-foreground! hover:to-[#0b63f3]/90!"
+                        "bg-sidebar-accent! text-sidebar-accent-foreground!"
                     )}
                     tooltip={item.title}
+                    onClick={(e) => handleNavClick(e, item.url)}
                   >
-                    <Link href={item.url}>
+                    {loadingUrl === item.url ? (
+                      <Spinner className="size-4" />
+                    ) : (
                       <item.icon className="size-4" />
-                      <span>{item.title}</span>
-                    </Link>
+                    )}
+                    <span>{item.title}</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -140,18 +178,20 @@ export const DashboardSidebar = () => {
               {configurationItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
-                    asChild
                     isActive={isActive(item.url)}
                     className={cn(
                       isActive(item.url) &&
-                        "bg-linear-to-b from-sidebar-primary to-[#0b63f3]! text-sidebar-primary-foreground! hover:to-[#0b63f3]/90!"
+                        "bg-sidebar-accent! text-sidebar-accent-foreground!"
                     )}
                     tooltip={item.title}
+                    onClick={(e) => handleNavClick(e, item.url)}
                   >
-                    <Link href={item.url}>
+                    {loadingUrl === item.url ? (
+                      <Spinner className="size-4" />
+                    ) : (
                       <item.icon className="size-4" />
-                      <span>{item.title}</span>
-                    </Link>
+                    )}
+                    <span>{item.title}</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -166,18 +206,20 @@ export const DashboardSidebar = () => {
               {accountItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
-                    asChild
                     isActive={isActive(item.url)}
                     className={cn(
                       isActive(item.url) &&
-                        "bg-linear-to-b from-sidebar-primary to-[#0b63f3]! text-sidebar-primary-foreground! hover:to-[#0b63f3]/90!"
+                        "bg-sidebar-accent! text-sidebar-accent-foreground!"
                     )}
                     tooltip={item.title}
+                    onClick={(e) => handleNavClick(e, item.url)}
                   >
-                    <Link href={item.url}>
+                    {loadingUrl === item.url ? (
+                      <Spinner className="size-4" />
+                    ) : (
                       <item.icon className="size-4" />
-                      <span>{item.title}</span>
-                    </Link>
+                    )}
+                    <span>{item.title}</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

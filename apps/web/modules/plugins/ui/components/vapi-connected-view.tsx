@@ -2,9 +2,9 @@
 
 import { BotIcon, PhoneIcon, SettingsIcon, UnplugIcon } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@workspace/ui/components/button";
+import { ButtonLink } from "@workspace/ui/components/button-link";
 import {
   Card,
   CardDescription,
@@ -60,7 +60,7 @@ export const VapiConnectedView = ({ onDisconnect }: VapiConnectedViewProps) => {
         <CardHeader>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="flex size-12 items-center justify-center rounded-lg border bg-muted">
+              <div className="flex size-12 items-center justify-center rounded-xl border bg-muted dark:bg-white/5 dark:border-white/10">
                 <SettingsIcon className="size-6 text-muted-foreground" />
               </div>
               <div>
@@ -70,17 +70,15 @@ export const VapiConnectedView = ({ onDisconnect }: VapiConnectedViewProps) => {
                 </CardDescription>
               </div>
             </div>
-            <Button asChild>
-              <Link href="/customization">
-                <SettingsIcon />
-                Configure
-              </Link>
-            </Button>
+            <ButtonLink href="/customization">
+              <SettingsIcon />
+              Configure
+            </ButtonLink>
           </div>
         </CardHeader>
       </Card>
 
-      <div className="overflow-hidden rounded-lg border bg-background">
+      <div className="overflow-hidden rounded-2xl border bg-background dark:bg-white/3 dark:border-white/10">
         <Tabs
           className="gap-0"
           defaultValue="phone-numbers"

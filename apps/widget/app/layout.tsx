@@ -1,16 +1,25 @@
-import { Geist, Geist_Mono } from "next/font/google"
+import { Exo_2, Roboto_Slab, Fira_Code } from "next/font/google"
 
 import "@workspace/ui/globals.css"
 import { Providers } from "@/components/providers"
+import { ThemeProvider } from "@workspace/ui/components/theme-provider";
 
-const fontSans = Geist({
+const exo2 = Exo_2({
   subsets: ["latin"],
   variable: "--font-sans",
+  display: "swap",
 })
 
-const fontMono = Geist_Mono({
+const robotoSlab = Roboto_Slab({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  display: "swap",
+})
+
+const firaCode = Fira_Code({
   subsets: ["latin"],
   variable: "--font-mono",
+  display: "swap",
 })
 
 export default function RootLayout({
@@ -19,15 +28,21 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${exo2.variable} ${robotoSlab.variable} ${firaCode.variable}`}
+      suppressHydrationWarning
+    >
       <body
-        className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased `}
+        className="font-sans antialiased"
       >
-        <Providers>
-          <div className="w-screen h-screen">
-            {children}
-          </div>
-        </Providers>
+        <ThemeProvider>
+          <Providers>
+            <div className="w-screen h-screen">
+              {children}
+            </div>
+          </Providers>
+        </ThemeProvider>
       </body>
     </html>
   )

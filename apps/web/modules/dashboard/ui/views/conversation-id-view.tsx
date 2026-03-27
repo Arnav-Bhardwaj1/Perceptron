@@ -143,8 +143,8 @@ export const ConversationIdView = ({
   }
 
   return (
-    <div className="flex h-full flex-col bg-muted">
-      <header className="flex items-center justify-between border-b bg-background p-2.5">
+    <div className="flex h-full flex-col bg-muted/50 dark:bg-transparent">
+      <header className="flex items-center justify-between border-b border-border dark:border-white/6 bg-background p-2.5">
         <Button
           size="sm"
           variant="ghost"
@@ -253,33 +253,51 @@ export const ConversationIdView = ({
 };
 
 export const ConversationIdViewLoading = () => {
+  const bubbles = [
+    { isUser: true, width: "w-44", lines: 1 },
+    { isUser: false, width: "w-64", lines: 2 },
+    { isUser: true, width: "w-56", lines: 1 },
+    { isUser: false, width: "w-72", lines: 3 },
+    { isUser: true, width: "w-40", lines: 1 },
+    { isUser: false, width: "w-60", lines: 2 },
+    { isUser: true, width: "w-52", lines: 1 },
+    { isUser: false, width: "w-48", lines: 1 },
+  ];
+
   return (
-    <div className="flex h-full flex-col bg-muted">
-      <header className="flex items-center justify-between border-b bg-background p-2.5">
+    <div className="flex h-full flex-col bg-muted/50 dark:bg-transparent">
+      <header className="flex items-center justify-between border-b border-border dark:border-white/6 bg-background p-2.5">
         <Button disabled size="sm" variant="ghost">
           <MoreHorizontalIcon />
         </Button>
       </header>
       <AIConversation className="max-h-[calc(100vh-180px)]">
         <AIConversationContent>
-          {Array.from({ length: 8 }, (_, index) => {
-            const isUser = index % 2 === 0;
-            const widths = ["w-48", "w-60", "w-72"];
-            const width = widths[index % widths.length];
-
-            return (
-              <div
-                className={cn(
-                  "group flex w-full items-end justify-end gap-2 py-2 [&>div]:max-w-[80%]",
-                  isUser ? "is-user" : "is-assistant flex-row-reverse"
-                )}
-                key={index}
-              >
-                <Skeleton className={`h-9 ${width} rounded-lg bg-neutral-200`} />
-                <Skeleton className="size-8 rounded-full bg-neutral-200" />
+          {bubbles.map((bubble, index) => (
+            <div
+              className={cn(
+                "group flex w-full items-end gap-2 py-2 [&>div]:max-w-[80%]",
+                bubble.isUser
+                  ? "is-user justify-end"
+                  : "is-assistant justify-start"
+              )}
+              key={index}
+              style={{ opacity: 1 - index * 0.06 }}
+            >
+              {!bubble.isUser && (
+                <Skeleton className="size-8 shrink-0 rounded-full" />
+              )}
+              <div className="space-y-1.5">
+                <Skeleton
+                  className={`${bubble.width} rounded-2xl`}
+                  style={{ height: `${bubble.lines * 20 + 16}px` }}
+                />
               </div>
-            );
-          })}
+              {bubble.isUser && (
+                <Skeleton className="size-8 shrink-0 rounded-full" />
+              )}
+            </div>
+          ))}
         </AIConversationContent>
       </AIConversation>
 

@@ -126,7 +126,7 @@ export const ConversationsPanel = () => {
                   href={`/conversations/${conversation._id}`}
                 >
                   <div className={cn(
-                    "-translate-y-1/2 absolute top-1/2 left-0 h-[64%] w-1 rounded-r-full bg-neutral-300 opacity-0 transition-opacity",
+                    "-translate-y-1/2 absolute top-1/2 left-0 h-[64%] w-1 rounded-r-full bg-primary opacity-0 transition-opacity",
                     pathname === `/conversations/${conversation._id}` &&
                       "opacity-100"
                   )} />
@@ -154,7 +154,7 @@ export const ConversationsPanel = () => {
                         <span
                           className={cn(
                             "line-clamp-1 text-muted-foreground text-xs",
-                            !isLastMessageFromOperator && "font-bold text-black"
+                            !isLastMessageFromOperator && "font-bold text-foreground"
                           )}
                         >
                           {conversation.lastMessage?.text}
@@ -180,23 +180,28 @@ export const ConversationsPanel = () => {
 }
 
 export const SkeletonConversations = () => {
+  const nameWidths = ["w-28", "w-20", "w-32", "w-24", "w-36", "w-22", "w-30", "w-26"];
+  const msgWidths = ["w-full", "w-4/5", "w-3/5", "w-full", "w-2/3", "w-4/5", "w-full", "w-3/4"];
+
   return (
-    <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-auto">
-      <div className="relative flex w-full min-w-0 flex-col p-2">
-        <div className="w-full space-y-2">
+    <div className="flex min-h-0 flex-1 flex-col overflow-auto">
+      <div className="relative flex w-full min-w-0 flex-col">
+        <div className="w-full">
           {Array.from({ length: 8 }).map((_, index) => (
             <div
-              className="flex items-start gap-3 rounded-lg p-4"
+              className="flex items-start gap-3 border-b p-4 py-5"
               key={index}
+              style={{ opacity: 1 - index * 0.08 }}
             >
-              <Skeleton className="h-10 w-10 shrink-0 rounded-full" />
+              <Skeleton className="size-10 shrink-0 rounded-full" />
               <div className="min-w-0 flex-1">
                 <div className="flex w-full items-center gap-2">
-                  <Skeleton className="h-4 w-24" />
-                  <Skeleton className="ml-auto h-3 w-12 shrink-0" />
+                  <Skeleton className={`h-4 ${nameWidths[index]}`} />
+                  <Skeleton className="ml-auto h-3 w-10 shrink-0" />
                 </div>
-                <div className="mt-2">
-                  <Skeleton className="h-3 w-full" />
+                <div className="mt-2 flex items-center gap-2">
+                  <Skeleton className={`h-3 ${msgWidths[index]}`} />
+                  <Skeleton className="size-4 shrink-0 rounded-full" />
                 </div>
               </div>
             </div>

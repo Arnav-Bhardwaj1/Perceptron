@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import { ArrowLeftIcon, MicIcon, MicOffIcon } from "lucide-react";
 import { Button } from "@workspace/ui/components/button";
+import { Spinner } from "@workspace/ui/components/spinner";
 import {
   AIConversation,
   AIConversationContent,
@@ -25,6 +27,18 @@ export const WidgetVoiceScreen = () => {
     endCall,
     isConnecting,
   } = useVapi();
+  const [isEndingCall, setIsEndingCall] = useState(false);
+
+  useEffect(() => {
+    if (!isConnected) {
+      setIsEndingCall(false);
+    }
+  }, [isConnected]);
+
+  const handleEndCall = () => {
+    setIsEndingCall(true);
+    endCall();
+  };
 
   return (
     <>
@@ -56,13 +70,13 @@ export const WidgetVoiceScreen = () => {
         </AIConversation>
       ) : (
         <div className="flex flex-1 h-full flex-col items-center justify-center gap-y-4">
-          <div className="flex items-center justify-center rounded-full border bg-white p-3">
+          <div className="flex items-center justify-center rounded-full border border-border dark:border-white/10 bg-white dark:bg-white/5 p-3">
             <MicIcon className="size-6 text-muted-foreground" />
           </div>
           <p className="text-muted-foreground">Transcript will appear here</p>
         </div>
       )}
-      <div className="border-t bg-background p-4">
+      <div className="border-t border-border dark:border-white/6 bg-background p-4">
         <div className="flex flex-col items-center gap-y-4">
           {isConnected && (
             <div className="flex items-center gap-x-2">
@@ -81,8 +95,10 @@ export const WidgetVoiceScreen = () => {
                 className="w-full"
                 size="lg"
                 variant="destructive"
-                onClick={() => endCall()}
+                disabled={isEndingCall}
+                onClick={handleEndCall}
               >
+                {isEndingCall && <Spinner />}
                 <MicOffIcon />
                 End Call
               </Button>
@@ -93,6 +109,7 @@ export const WidgetVoiceScreen = () => {
                 size="lg"
                 onClick={() => startCall()}
               >
+                {isConnecting && <Spinner />}
                 <MicIcon />
                 Start Call
               </Button>

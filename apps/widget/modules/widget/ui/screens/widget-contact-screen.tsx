@@ -43,13 +43,13 @@ export const WidgetContactScreen = () => {
         </div>
       </WidgetHeader>
       <div className="flex h-full flex-col items-center justify-center gap-y-4">
-        <div className="flex items-center justify-center rounded-full border bg-white p-3">
+        <div className="flex items-center justify-center rounded-full border border-border dark:border-white/10 bg-white dark:bg-white/5 p-3">
           <PhoneIcon className="size-6 text-muted-foreground" />
         </div>
         <p className="text-muted-foreground">Available 24/7</p>
         <p className="font-bold text-2xl">{phoneNumber}</p>
       </div>
-      <div className="border-t bg-background p-4">
+      <div className="border-t border-border dark:border-white/6 bg-background p-4">
         <div className="flex flex-col items-center gap-y-2">
           <Button
             className="w-full"
